@@ -1,63 +1,17 @@
 "use strict";
 
-let title = prompt("What is the name of your project?", "new project");
-const warning =()=> alert("please, enter your answer correctly");
-
-while (title === null || title.trim().length === 0) {
-  warning()  ;
-  title = prompt("What is the name of your project?", "new project");
-} 
-
-let screens = prompt("What kind of screens (simple, comlicated, interactive) do you need?", "simple");
-while (screens === null || screens.trim().length === 0 || Boolean(Number(screens)) === true) {
-  warning();
-  screens = prompt("What kind of screens (simple, comlicated, interactive) do you need?", "simple");
-};
-
-let screenPrice =prompt("What is the price of a screen would you like to have?", "1000");
-
-while (screenPrice === NaN || Number(screenPrice) === 0 || Boolean(Number(screenPrice)) === false) {
-  warning();
-  screenPrice = prompt("What is the price of a screen would you like to have?", "1000");
-};
-
-let adaptive = confirm("It should be an adaptive site?");
-
-//let addAnotherService = () => confirm("Would you like more service to have?"); //мне кажется логично сначала спросить нужны ли доп услуги вообще, поэтому для себя написала эту функцию
-//addAnotherService();
-//if ( addAnotherService === true) {
-  
-let addService01 = prompt("What kind of service do you want to have else?");
-  while (addService01 === null || addService01.trim().length === 0 || Boolean(Number(addService01)) === true) {
-  warning();
-  addService01 = prompt("What kind of service do you want to have else?")
-  };
-  let servicePrice01 = prompt("What is the price would you like to have for this service?");
-  while (servicePrice01 === NaN || Number(servicePrice01) < 0) {
-  warning();
-  servicePrice01 = Number(prompt("What is the price would you like to have for this service?"));
-}
-
-//};
-//addAnotherService();
-//if ( addAnotherService === true) {
-  
-let addService02 = prompt("What kind of service do you want to have else?");
-  while (addService02 === null || addService02.trim().length === 0 || Boolean(Number(addService02)) === true) {
-  warning();
-  addService02 = prompt("What kind of service do you want to have else?");
-  };
-  let servicePrice02 = prompt("What is the price would you like to have for this service?");
-  while (servicePrice02 === NaN  || Number(servicePrice02) < 0) {
-    warning();
-    servicePrice02 = prompt("What is the price would you like to have for this service?");
-}   
-//} 
+let title = prompt("What is the name of your project? / Как называется ваш проект?", "new project");
+let screens = prompt("What kind of screens (simple, comlicated, interactive) do you need? / Какие типы экранов (простые, сложные, интерактивные) нужно разработать?" , "simple");
+let screenPrice = +prompt("What is the price of a screen would you like to have? / Сколько будет стоить данная работа?", "1000");
+let adaptive = confirm("It should be an adaptive site? / Нужен ли адаптив на сайте?");
+let addService01 = prompt("What kind of service do you want to have else? / Какой дополнительный тип услуги нужен?");
+let servicePrice01 = +prompt("What is the price would you like to have for this service? / Сколько это будет стоить?");
+let addService02 = prompt("What kind of service do you want to have else?/Какой дополнительный тип услуги нужен?");
+let servicePrice02 = +prompt("What is the price would you like to have for this service? / Сколько это будет стоить?");
 const fullPrice = Number(screenPrice) + Number(servicePrice01) + Number(servicePrice02);
 const rollback = 10; //percent
 const rollbackSum = fullPrice * (rollback/100);
 const servicePercentPrice = Math.ceil(fullPrice - rollbackSum);
-
 
 console.log(typeof title, typeof fullPrice, typeof adaptive);
 console.log(screens.length);
