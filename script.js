@@ -15,9 +15,9 @@ const servicePercentPrice = Math.ceil(fullPrice - rollbackSum);
 
 console.log(typeof title, typeof fullPrice, typeof adaptive);
 console.log(screens.length);
-console.log(screenPrice, typeof screenPrice)
+console.log(screenPrice, typeof screenPrice);
 console.log("screenPrice: " + screenPrice + " euro", ", fullPrice: " + fullPrice + " euro");
-console.log ("screens:" + screens.toLowerCase().split());
+console.log("screens:" + screens.toLowerCase().split());
 console.log("Rollback to mediator: " + rollbackSum + " euro");
 console.log("servicePercentPrice: " + servicePercentPrice + " euro");
 
@@ -28,5 +28,5 @@ if (fullPrice > 30000) {
 } else if (fullPrice >=0 && fullPrice <= 15000){
   console.log("Скидка не предусмотрена");
 } else {
-  console.log ("что-то пошло не так");
+  console.log("что-то пошло не так");
 }
