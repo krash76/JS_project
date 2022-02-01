@@ -9,6 +9,7 @@ let servicePrice01 = +prompt("What is the price would you like to have for this 
 let addService02 = prompt("What kind of service do you want to have else?/Какой дополнительный тип услуги нужен?");
 let servicePrice02 = +prompt("What is the price would you like to have for this service? / Сколько это будет стоить?");
 let rollback = 10; //percent
+let allServicePrices, fullPrice, servicePercentPrice ;
 
 const getAllServicePrices = function(price1, price2){
 return (price1 + price2);
@@ -27,7 +28,7 @@ function getServicePercentPrices() {
   return Math.ceil(fullPrice - fullPrice * (rollback/100));
 }
 
-const getRollbackMessage =() => {
+const getRollbackMessage = () => {
   if (fullPrice > 30000) {
     console.log("Даем скидку в 10%");
   } else if (fullPrice > 15000 && fullPrice <= 30000) {
@@ -39,15 +40,17 @@ const getRollbackMessage =() => {
   }
 }
 
-const allServicePrices = getAllServicePrices(servicePrice01, servicePrice02);
-const fullPrice = getFullPrice(screenPrice);
+const showTypeOf = (el) => {
+  return typeof el;
+}
+allServicePrices = getAllServicePrices(servicePrice01, servicePrice02);
+fullPrice = getFullPrice(screenPrice);
 getTitle(title);
-const  servicePercentPrice = getServicePercentPrices();
+servicePercentPrice = getServicePercentPrices();
+getRollbackMessage(); // сообщение о скидке пользователю 
 
+console.log ("screens: " + Array.from(screens.toLowerCase().split()) ); //вывод строки с типами экранов для разработки screens
+console.log(showTypeOf(title), showTypeOf(fullPrice), showTypeOf(adaptive), showTypeOf(screenPrice)); //вызовы функции showTypeOf
+console.log("servicePercentPrice: " + servicePercentPrice + " euro"); //стоимость за вычетом процента отката посреднику
 
-console.log ("screens: " + Array.from(screens.toLowerCase().split()) );
-console.log(typeof title, typeof fullPrice, typeof adaptive);
-console.log(typeof screenPrice);
-console.log("servicePercentPrice: " + servicePercentPrice + " euro");
-console.log (getRollbackMessage());
 
