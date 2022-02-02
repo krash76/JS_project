@@ -1,22 +1,60 @@
 "use strict";
-
-let title = prompt("What is the name of your project? / Как называется ваш проект?", "new project");
-let screens = prompt("What kind of screens (simple, comlicated, interactive) do you need? / Какие типы экранов (простые, сложные, интерактивные) нужно разработать?" , "simple");
-let screenPrice = +prompt("What is the price of a screen would you like to have? / Сколько будет стоить данная работа?", "1000");
-let adaptive = confirm("It should be an adaptive site? / Нужен ли адаптив на сайте?");
-let addService01 = prompt("What kind of service do you want to have else? / Какой дополнительный тип услуги нужен?");
-let servicePrice01 = +prompt("What is the price would you like to have for this service? / Сколько это будет стоить?");
-let addService02 = prompt("What kind of service do you want to have else?/Какой дополнительный тип услуги нужен?");
-let servicePrice02 = +prompt("What is the price would you like to have for this service? / Сколько это будет стоить?");
+let title;
+let screens;
+let screenPrice;
+let adaptive;
+let addService01;
+let addService02;
 let rollback = 10; //percent
 let allServicePrices, fullPrice, servicePercentPrice ;
+let servicePrice01;
+let servicePrice02;
 
-const getAllServicePrices = function(price1, price2){
-return (price1 + price2);
+const isNumber = function(num) {
+  return (!isNaN(parseFloat(num)) && isFinite(num));
 }
 
-function getFullPrice(price0) {
-  return (price0 + getAllServicePrices(servicePrice01, servicePrice02))
+const getNumber = function(num) {
+  return num = Number(num.trim());
+}
+
+const questionnaire = function () {
+  title = prompt("What is the name of your project? / Как называется ваш проект?", "new project");
+  screens = prompt("What kind of screens (simple, comlicated, interactive) do you need? / Какие типы экранов (простые, сложные, интерактивные) нужно разработать?" , "simple");
+
+  screenPrice = prompt("What is the price of a screen would you like to have? / Сколько будет стоить данная работа?");
+  while (!isNumber(screenPrice)) {
+    screenPrice = prompt("What is the price of a screen would you like to have? / Сколько будет стоить данная работа?");
+  }
+    
+  adaptive = confirm("It should be an adaptive site? / Нужен ли адаптив на сайте?");
+  return screenPrice = getNumber(screenPrice);
+}
+ 
+const getAllServicePrices = function() {
+  let sum = 0;
+  for (let i = 0; i < 2; i++) {
+    if ( i === 0) {
+      addService01 = prompt("1What kind of service do you want to have else? / Какой дополнительный тип услуги нужен?");
+      servicePrice01 = prompt("1What is the price would you like to have for this service? / Сколько это будет стоить?");
+      while (!isNumber(servicePrice01)) {
+        servicePrice01 = prompt("1What is the price would you like to have for this service? / Сколько это будет стоить?");
+      }
+      servicePrice01 = getNumber(servicePrice01);
+    } else if (i === 1) {
+      addService02 = prompt("2What kind of service do you want to have else?/Какой дополнительный тип услуги нужен?");
+      servicePrice02 = prompt("2What is the price would you like to have for this service? / Сколько это будет стоить?");
+      while (!isNumber(servicePrice02)) {
+        servicePrice02 = prompt("2What is the price would you like to have for this service? / Сколько это будет стоить?");
+      }
+      servicePrice02 = getNumber(servicePrice02);
+    }
+  }
+  return sum += servicePrice01 + servicePrice02;
+}
+
+function getFullPrice() {
+  return (screenPrice + allServicePrices);
 }
 
 const getTitle = (el) => {
@@ -30,21 +68,23 @@ function getServicePercentPrices() {
 
 const getRollbackMessage = () => {
   if (fullPrice > 30000) {
-    console.log("Даем скидку в 10%");
+    console.log("discount 10% / Даем скидку в 10%");
   } else if (fullPrice > 15000 && fullPrice <= 30000) {
-    console.log("Даем скидку в 5%");
-  } else if (fullPrice >=0 && fullPrice <= 15000){
-    console.log("Скидка не предусмотрена");
+    console.log("Discount 5% / Даем скидку в 5%");
+  } else if (fullPrice >=0 && fullPrice <= 15000) {
+    console.log("No discount / Скидка не предусмотрена");
   } else {
-    console.log("что-то пошло не так");
+    console.log("something went wrong / что-то пошло не так");
   }
 }
 
 const showTypeOf = (el) => {
   return typeof el;
 }
-allServicePrices = getAllServicePrices(servicePrice01, servicePrice02);
-fullPrice = getFullPrice(screenPrice);
+
+questionnaire();
+allServicePrices = getAllServicePrices();
+fullPrice = getFullPrice();
 getTitle(title);
 servicePercentPrice = getServicePercentPrices();
 getRollbackMessage(); // сообщение о скидке пользователю 
@@ -52,5 +92,3 @@ getRollbackMessage(); // сообщение о скидке пользовате
 console.log ("screens: " + Array.from(screens.toLowerCase().split()) ); //вывод строки с типами экранов для разработки screens
 console.log(showTypeOf(title), showTypeOf(fullPrice), showTypeOf(adaptive), showTypeOf(screenPrice)); //вызовы функции showTypeOf
 console.log("servicePercentPrice: " + servicePercentPrice + " euro"); //стоимость за вычетом процента отката посреднику
-
-
