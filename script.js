@@ -3,12 +3,11 @@ let title;
 let screens;
 let screenPrice;
 let adaptive;
-let addService01;
-let addService02;
+let addService01, addService02;
+let servicePrice01, servicePrice02;
 let rollback = 10; //percent
 let allServicePrices, fullPrice, servicePercentPrice ;
-let servicePrice01;
-let servicePrice02;
+
 
 const isNumber = function(num) {
   return (!isNaN(parseFloat(num)) && isFinite(num));
@@ -21,7 +20,6 @@ const getNumber = function(num) {
 const questionnaire = function () {
   title = prompt("What is the name of your project? / Как называется ваш проект?", "new project");
   screens = prompt("What kind of screens (simple, comlicated, interactive) do you need? / Какие типы экранов (простые, сложные, интерактивные) нужно разработать?" , "simple");
-
   while (!isNumber(screenPrice)) {
     screenPrice = prompt("What is the price of a screen would you like to have? / Сколько будет стоить данная работа?");
   }
