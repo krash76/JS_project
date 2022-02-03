@@ -20,10 +20,8 @@ const getNumber = function(num) {
 const questionnaire = function () {
   title = prompt("What is the name of your project? / Как называется ваш проект?", "new project");
   screens = prompt("What kind of screens (simple, comlicated, interactive) do you need? / Какие типы экранов (простые, сложные, интерактивные) нужно разработать?" , "simple");
-  while (!isNumber(screenPrice)) {
-    screenPrice = prompt("What is the price of a screen would you like to have? / Сколько будет стоить данная работа?");
-  }
-    
+  do {screenPrice = prompt("What is the price of a screen would you like to have? / Сколько будет стоить данная работа?")
+  } while (!isNumber(screenPrice));    
   adaptive = confirm("It should be an adaptive site? / Нужен ли адаптив на сайте?");
   return screenPrice = getNumber(screenPrice);
 }
@@ -33,15 +31,13 @@ const getAllServicePrices = function() {
   for (let i = 0; i < 2; i++) {
     if ( i === 0) {
       addService01 = prompt("1What kind of service do you want to have else? / Какой дополнительный тип услуги нужен?");
-      while (!isNumber(servicePrice01)) {
-        servicePrice01 = prompt("1What is the price would you like to have for this service? / Сколько это будет стоить?");
-      }
+      do {servicePrice01 = prompt("1What is the price would you like to have for this service? / Сколько это будет стоить?")
+      } while (!isNumber(servicePrice01)); 
       servicePrice01 = getNumber(servicePrice01);
     } else if (i === 1) {
       addService02 = prompt("2What kind of service do you want to have else?/Какой дополнительный тип услуги нужен?");
-      while (!isNumber(servicePrice02)) {
-        servicePrice02 = prompt("2What is the price would you like to have for this service? / Сколько это будет стоить?");
-      }
+      do {servicePrice02 = prompt("2What is the price would you like to have for this service? / Сколько это будет стоить?")
+      } while (!isNumber(servicePrice02)) 
       servicePrice02 = getNumber(servicePrice02);
     }
   }
