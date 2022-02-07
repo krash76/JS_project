@@ -27,16 +27,11 @@ const appData = {
       let price = 0;
       do { name = prompt("What kind of service do you want to have else? / Какой дополнительный тип услуги нужен?")
       } while (appData.isString(name));
-      do { price = prompt("1What is the price would you like to have for this service? / Сколько это будет стоить?")
+      do { price = prompt("What is the price would you like to have for this service? / Сколько это будет стоить?")
       } while (!appData.isNumber(price));
-      if ( i === 0) {
-        let name1 = name + "01";
-        appData.services[name1] = +price;
-      } else {
-        let name2 = name + "02";
-        appData.services[name2] = +price;
+        name = `service_N${i+1}_${name}`;
+        appData.services[name] = +price;
       }
-    }
     appData.adaptive = confirm("It should be an adaptive site? / Нужен ли адаптив на сайте?");
   },
 
