@@ -29,9 +29,9 @@ const appData = {
       } while (appData.isString(name));
       do { price = prompt("What is the price would you like to have for this service? / Сколько это будет стоить?")
       } while (!appData.isNumber(price));
-        name = `service_N${i+1}_${name}`;
-        appData.services[name] = +price;
-      }
+      name = `service_N${i+1}_${name}`;
+      appData.services[name] = +price;
+    }
     appData.adaptive = confirm("It should be an adaptive site? / Нужен ли адаптив на сайте?");
   },
 
