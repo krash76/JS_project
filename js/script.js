@@ -1,20 +1,19 @@
 "use strict";
-const title = document.getElementsByTagName("h1")[0].textContent;
+const title = document.getElementsByTagName("h1")[0];
 const buttons = document.getElementsByClassName("handler_btn");
 const start_btn = buttons[0];
 const reset_btn = buttons[1];
 const screen_btn = document.querySelector(".screen-btn");
 const otherItemsPercent = document.querySelectorAll(".other-items.percent");
 const otherItemsNumber = document.querySelectorAll(".other-items.number");
-const inputRollback = document.querySelector(".rollback").children[0].children[0];
-const spanRollback = document.querySelector(".rollback").children[0].children[1];
+const inputRollback = document.querySelector(".rollback").querySelector("input");
+const spanRollback = document.querySelector(".rollback").querySelector("span");
 const totalInputPrice = document.getElementsByClassName("total-input")[0];
 const totalInputCount = document.getElementsByClassName("total-input")[1];
 const totalInputCountOther = document.getElementsByClassName("total-input")[2];
 const totalInputFullCount = document.getElementsByClassName("total-input")[3];
 const totalInputCountRollback = document.getElementsByClassName("total-input")[4];
 let screen = document.querySelectorAll(".screen");
-
 
 const appData = {
   title: "",
