@@ -23,7 +23,7 @@ const appData = {
   adaptive: true,
   servicesPercent: {},
   servicesNumber: {},
-  rollback : 0,
+  rollback: 0,
   servicePricesPercent: 0, 
   servicePricesNumber: 0, 
   fullPrice: 0,
@@ -34,6 +34,7 @@ const appData = {
   },
 
   addScreens: function() {
+    appData.screens.length = 0;
     screenSelectDiv = document.querySelectorAll(".screen");
     screenSelectDiv.forEach(function(screen, index) {
       const select = screen.querySelector("select");
@@ -47,7 +48,7 @@ const appData = {
           count: +input.value 
         });
       }
-     // console.log(appData.screens) 
+   // console.log(appData.screens) 
     });
   },
 
@@ -108,12 +109,15 @@ const appData = {
    init: function() {
     appData.addTitle();
     start_btn.addEventListener("click", () => {
-      appData.screens = [];
-      totalInputPrice.value = 0;
-      totalInputScreensCount.value = 0;
+      appData.screens.length = 0;
+      appData.screenPrice = 0;
+      appData.screensCount = 0;
+      appData.servicePricesPercent =0;
+      appData.servicePricesNumber = 0;
+      appData.fullPrice = 0;
+      appData.fullPrice = 0;
       appData.start();
     }); 
-    
     screen_btn.addEventListener("click", appData.addScreenBlock);
     inputRollback.addEventListener("input", appData.changeRollbackRange);
   },
@@ -126,14 +130,7 @@ const appData = {
     appData.showResult();
   },
 /*
-  isString: function(el) {
-    return((el) === null || el.trim().length === 0 || Boolean(Number(el)) === true || !isNaN(el));
-  },
-
-  getNumber: function(num) {
-    return num = Number(num.trim());
-  },
-
+ 
   logging: function() {
     console.log (this.screens );
     console.log ( "screens price:" + this.screenPrice);
