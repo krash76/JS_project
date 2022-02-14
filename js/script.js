@@ -46,10 +46,11 @@ const appData = {
           name: selectName,
           price: +select.value * +input.value,
           count: +input.value 
-        });
+        })
+      } else {
+        alert ("внимание! не выбран тип экрана или не указано количество экранов");
       }
-   // console.log(appData.screens) 
-    });
+    })
   },
 
   addScreenBlock: function() {
@@ -109,7 +110,6 @@ const appData = {
    init: function() {
     appData.addTitle();
     start_btn.addEventListener("click", () => {
-      appData.screens.length = 0;
       appData.screenPrice = 0;
       appData.screensCount = 0;
       appData.servicePricesPercent =0;
@@ -125,12 +125,14 @@ const appData = {
   start: function() {
     appData.addScreens();
     appData.addServices();
-    appData.addPrices();
+    if (appData.screens.length === screenSelectDiv.length) {
+      appData.addPrices();
+    };
    // appData.logging();
     appData.showResult();
   },
-/*
- 
+
+  /*
   logging: function() {
     console.log (this.screens );
     console.log ( "screens price:" + this.screenPrice);
