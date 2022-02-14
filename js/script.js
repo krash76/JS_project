@@ -81,6 +81,8 @@ const appData = {
   changeRollbackRange: function() {
     spanRollback.textContent = inputRollback.value + "%";
     appData.rollback = +inputRollback.value;
+    appData.servicePercentPrice = Math.ceil(appData.fullPrice - appData.fullPrice * (appData.rollback/100));
+    totalInputCountRollback.value = appData.servicePercentPrice;
   },
 
   addPrices: function() {
@@ -96,7 +98,6 @@ const appData = {
     }
     appData.fullPrice = appData.screenPrice + appData.servicePricesNumber + appData.servicePricesPercent;
     appData.servicePercentPrice = Math.ceil(appData.fullPrice - appData.fullPrice * (appData.rollback/100));
-
   },
 
   showResult: function() {
