@@ -14,6 +14,7 @@ const totalInputCountOther = document.getElementsByClassName("total-input")[2];
 const totalInputFullCount = document.getElementsByClassName("total-input")[3];
 const totalInputCountRollback = document.getElementsByClassName("total-input")[4];
 let screenSelectDiv = document.querySelectorAll(".screen");
+const leftPart = document.querySelector(".main-controls.elements");
 
 const appData = {
   title: "",
@@ -80,9 +81,9 @@ const appData = {
 
   changeRollbackRange: function() {
     spanRollback.textContent = inputRollback.value + "%";
-    appData.rollback = +inputRollback.value;
-    appData.servicePercentPrice = Math.ceil(appData.fullPrice - appData.fullPrice * (appData.rollback/100));
-    totalInputCountRollback.value = appData.servicePercentPrice;
+    this.rollback = +inputRollback.value;
+    this.servicePercentPrice = Math.ceil(this.fullPrice - this.fullPrice * (this.rollback/100));
+    totalInputCountRollback.value = this.servicePercentPrice;
   },
 
   addPrices: function() {
@@ -96,53 +97,118 @@ const appData = {
     for (let key in this.servicesNumber) {
       this.servicePricesNumber += this.servicesNumber[key];
     }
-    appData.fullPrice = appData.screenPrice + appData.servicePricesNumber + appData.servicePricesPercent;
-    appData.servicePercentPrice = Math.ceil(appData.fullPrice - appData.fullPrice * (appData.rollback/100));
+    this.fullPrice = this.screenPrice + this.servicePricesNumber + this.servicePricesPercent;
+    this.servicePercentPrice = Math.ceil(this.fullPrice - this.fullPrice * (this.rollback/100));
   },
 
   showResult: function() {
-    totalInputPrice.value = appData.screenPrice;
-    totalInputScreensCount.value = appData.screensCount;
-    totalInputCountOther.value = appData.servicePricesPercent + appData.servicePricesNumber;
-    totalInputFullCount.value = appData.fullPrice;
-    totalInputCountRollback.value = appData.servicePercentPrice;
+    totalInputPrice.value = this.screenPrice;
+    totalInputScreensCount.value = this.screensCount;
+    totalInputCountOther.value = this.servicePricesPercent + this.servicePricesNumber;
+    totalInputFullCount.value = this.fullPrice;
+    totalInputCountRollback.value = this.servicePercentPrice;
   },
 
-   init: function() {
-    appData.addTitle();
+  init: function() {
+    this.addTitle();
     start_btn.addEventListener("click", () => {
-      appData.screenPrice = 0;
-      appData.screensCount = 0;
-      appData.servicePricesPercent =0;
-      appData.servicePricesNumber = 0;
-      appData.fullPrice = 0;
-      appData.fullPrice = 0;
-      appData.start();
+      this.screenPrice = 0;
+      this.screensCount = 0;
+      this.servicePricesPercent =0;
+      this.servicePricesNumber = 0;
+      this.fullPrice = 0;
+      this.fullPrice = 0;
+      this.start();
     }); 
     screen_btn.addEventListener("click", this.addScreenBlock);
-    inputRollback.addEventListener("input", this.changeRollbackRange);
+    inputRollback.addEventListener("input",() => {
+      const newChangeRollbackRange = this.changeRollbackRange.bind(this);
+      newChangeRollbackRange();
+    });
   },
  
   start: function() {
     this.addScreens();
     this.addServices();
     if (this.screens.length === screenSelectDiv.length) {
-      this.addPrices();
+      const newAddPrices = this.addPrices.bind(this);
+      newAddPrices();
     };
     this.showResult();
+    if (totalInputPrice.value !== "0") {
+      let leftInputs = leftPart.querySelectorAll("input[type= text]");
+      let leftSelects = leftPart.querySelectorAll("select");
+      this.disabled(leftInputs);
+      this.disabled(leftSelects);
+      start_btn.style.display = "none";
+      reset_btn.style.display = "inline-block";
+    };
   },
 
-  /*
-  logging: function() {
-    console.log (this.screens );
-    console.log ( "screens price:" + this.screenPrice);
-    console.log(this.servicesPercent, this.servicesNumber);
-    console.log ("services price: " + this.allServicePrices);
-    console.log ("full price: " + this.fullPrice);
-    console.log ("total price (excl. rollback): " + this.servicePercentPrice);
-    console.log ("adaptive: " + this.adaptive)
+  disabled: function(arr) {
+    arr.forEach((el) => {
+      el.setAttribute("disabled", "true");
+    })
+  },
+
+  reset: function () {
+    let leftInputs = leftPart.querySelectorAll("input[type= text]");
+    let leftSelects = leftPart.querySelectorAll("select");
+    this.removeDisabled(leftInputs);
+    this.removeDisabled(leftSelects);
+    start_btn.style.display = "inline-block";
+    reset_btn.style.display = "none";
+    this.removeScreens();
+    this.unCheck();
+    inputRollback.value = 0;
+    spanRollback.textContent = inputRollback.value;
+    totalInputPrice.value = 0;
+    totalInputScreensCount.value = 0;
+    totalInputCountOther.value = 0;
+    totalInputFullCount.value = 0;
+    totalInputCountRollback.value = 0;
+  },
+
+  removeScreens: function() {
+    screenSelectDiv.forEach((screen, index) => {
+      const select = screen.querySelector("select");
+      const input = screen.querySelector("input");
+      select.options[0].selected = true;
+      input.value = "0";
+      if (index > 0) {
+        const mainViewDiv =document.querySelector(".main-controls__views.element") 
+        mainViewDiv.removeChild(screen)};
+    });
+    screenSelectDiv = document.querySelectorAll(".screen");
+    appData.screens = [];
+  },
+
+  unCheck: function() {
+    otherItemsPercent.forEach((item) => {
+      const check = item.querySelector("input[type = checkbox]");
+      if ( check.checked) {
+        check.checked = false;
+      }
+    });
+    otherItemsNumber.forEach((item) => {
+      const check = item.querySelector("input[type = checkbox]");
+      if ( check.checked) {
+        check.checked = false;
+      }
+    })
+  },
+
+  removeDisabled: function(arr) {
+    arr.forEach((el) => {
+      el.removeAttribute("disabled");
+    })
   }
-  */
 }
 
-appData.init();
+start_btn.setAttribute("style", "display: inline-block");
+
+const newInit = appData.init.bind(appData);
+newInit();
+
+const newReset = appData.reset.bind(appData);
+reset_btn.addEventListener("click", newReset)
