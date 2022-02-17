@@ -15,6 +15,11 @@ const totalInputFullCount = document.getElementsByClassName("total-input")[3];
 const totalInputCountRollback = document.getElementsByClassName("total-input")[4];
 let screenSelectDiv = document.querySelectorAll(".screen");
 const leftPart = document.querySelector(".main-controls.elements");
+const cmsInput = document.querySelector ("#cms-open");
+const cmsVariants = document.querySelector(".hidden-cms-variants");
+
+
+
 
 const appData = {
   title: "",
@@ -58,6 +63,7 @@ const appData = {
     screenSelectDiv = document.querySelectorAll(".screen");
     const screenClone = screenSelectDiv[0].cloneNode(true);
     screenSelectDiv[screenSelectDiv.length-1].after(screenClone);
+    screenClone.querySelector("input[type=text]").value = "";
   },
 
   addServices: function() {
@@ -77,9 +83,42 @@ const appData = {
         this.servicesNumber[label.textContent] = +input.value;
       }
     })
+    
+  },
+/*
+ addCms: function() {
+    let cmsSelect = cmsVariants.querySelector("#cms-select");
+    if (cmsInput.checked) {
+      cmsVariants.style.display = "flex";
+      cmsSelect.disabled = false;
+    } else {
+      cmsSelect.disable = true;
+      cmsVariants.style.display = "none";
+    }
+    console.log (cmsSelect.value); //value = ""!!!
+
+      if (cmsSelect.value !== "") {
+        this.continueAddCms();
+      }
   },
 
-  changeRollbackRange: function() {
+  contitnueAddCms: function() {
+     let cmsSelect = cmsVariants.querySelector("#cms-select");
+  
+     console.log (cmsSelect.options[cmsSelect.selectedIndex].textContent);
+      if (cmsSelect.value === "other") {
+
+        let mainControlsInput = cmsVariants.querySelector(".main-controls__input");
+        mainControlsInput.style.display = "flex";
+        let cmsOtherInputPercent = mainControlsInput.querySelector("#cms-other-input");
+        cmsOtherInputPercent.disabled = false;
+      } else if (cmsSelect.value === "50") {
+        console.log ("50")
+      }
+    }, 
+    */
+  
+    changeRollbackRange: function() {
     spanRollback.textContent = inputRollback.value + "%";
     this.rollback = +inputRollback.value;
     this.servicePercentPrice = Math.ceil(this.fullPrice - this.fullPrice * (this.rollback/100));
@@ -130,9 +169,12 @@ const appData = {
   start: function() {
     this.addScreens();
     this.addServices();
+
     if (this.screens.length === screenSelectDiv.length) {
       const newAddPrices = this.addPrices.bind(this);
+      
       newAddPrices();
+      
     };
     this.showResult();
     if (totalInputPrice.value !== "0") {
@@ -206,6 +248,7 @@ const appData = {
 }
 
 start_btn.setAttribute("style", "display: inline-block");
+cmsInput.addEventListener("change", appData.addCms); 
 
 const newInit = appData.init.bind(appData);
 newInit();
